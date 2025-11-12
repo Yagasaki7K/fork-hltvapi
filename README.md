@@ -12,6 +12,10 @@ This repository is no longer maintained.
 
 This is my experimental project, but also small useful module for node.js which helps you to easy implement data from popular CS:GO website [hltv.org](http://www.hltv.org/).
 
+### Requirements
+
+HLTV API now targets **Node.js 18** or newer in order to rely on the platform `fetch` implementation and keep the data retrieval up to date without extra dependencies.
+
 ### Installation
 
 ```bash

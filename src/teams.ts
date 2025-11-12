@@ -1,6 +1,6 @@
 import cheerio from 'cheerio'
-import fetch from 'node-fetch'
-import { CONFIG, USER_AGENT } from './config'
+import { CONFIG } from './config'
+import { fetchHtml } from './utils/http'
 
 interface IPlayer {
   fullname: string
@@ -24,11 +24,7 @@ export async function getTopTeams(): Promise<ITeam[]> {
   const url = `${CONFIG.BASE}/${CONFIG.TEAMS}`
 
   try {
-    const body = await (
-      await fetch(url, {
-        headers: { 'User-Agent': USER_AGENT },
-      })
-    ).text()
+    const body = await fetchHtml(url)
 
     const $ = cheerio.load(body, {
       normalizeWhitespace: true,

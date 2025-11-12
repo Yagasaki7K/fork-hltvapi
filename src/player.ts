@@ -1,6 +1,6 @@
 import cheerio from 'cheerio'
-import fetch from 'node-fetch'
-import { CONFIG, USER_AGENT } from './config'
+import { CONFIG } from './config'
+import { fetchHtml } from './utils/http'
 
 interface IPlayer {
   id: number
@@ -31,11 +31,7 @@ export async function getPlayerById(id: number): Promise<IPlayer> {
   const url = `${CONFIG.BASE}/${CONFIG.PLAYERS}/${id}/_`
 
   try {
-    const body = await (
-      await fetch(url, {
-        headers: { 'User-Agent': USER_AGENT },
-      })
-    ).text()
+    const body = await fetchHtml(url)
 
     const $ = cheerio.load(body, {
       normalizeWhitespace: true,
@@ -124,11 +120,7 @@ export async function getPlayersByName(name: string): Promise<ISearchedPlayer[]>
   const url = `${CONFIG.BASE}/search?query=${name}`
 
   try {
-    const body = await (
-      await fetch(url, {
-        headers: { 'User-Agent': USER_AGENT },
-      })
-    ).text()
+    const body = await fetchHtml(url)
 
     const $ = cheerio.load(body, {
       normalizeWhitespace: true,

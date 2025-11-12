@@ -1,6 +1,6 @@
 import cheerio from 'cheerio'
-import fetch from 'node-fetch'
-import { CONFIG, USER_AGENT } from './config'
+import { CONFIG } from './config'
+import { fetchHtml } from './utils/http'
 
 interface IHalfResult {
   side: 't' | 'ct'
@@ -60,11 +60,7 @@ export async function getMatchById(matchId: number): Promise<IMatch> {
   const url = `${CONFIG.BASE}/${CONFIG.MATCHES}/${matchId}/_`
 
   try {
-    const body = await (
-      await fetch(url, {
-        headers: { 'User-Agent': USER_AGENT },
-      })
-    ).text()
+    const body = await fetchHtml(url)
 
     const $ = cheerio.load(body, {
       normalizeWhitespace: true,
